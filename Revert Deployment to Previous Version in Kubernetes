@@ -1,0 +1,18 @@
+Earlier today, the Nautilus DevOps team deployed a new release for an application. However, a customer has reported a bug related to this recent release. Consequently, the team aims to revert to the previous version.
+
+
+There exists a deployment named nginx-deployment; initiate a rollback to the previous revision.
+
+Note: The kubectl utility on the jump-host has been configured to work with the Kubernetes cluster.
+
+------------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>----------------------------------------
+
+ 1  kubectl get nodes
+    2  kubectl get pods
+    3  kubectl rollout history deployment nginx-deployment
+    4  kubectl rollout undo deployment nginx-deployment
+    5  kubectl get nodes
+    6  kubectl get pods
+    7  kubectl rollout history deployment nginx-deployment
+    8  kubectl rollout status deployment nginx-deployment
+    9  history
