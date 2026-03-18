@@ -1,0 +1,58 @@
+The Nautilus DevOps team is gearing up to deploy applications on a Kubernetes cluster for migration purposes. A team member has been tasked with creating a ReplicaSet outlined below:
+
+
+
+Create a ReplicaSet using httpd image with latest tag (ensure to specify as httpd:latest) and name it httpd-replicaset.
+
+
+Apply labels: app as httpd_app, type as front-end.
+
+
+Name the container httpd-container. Ensure the replica count is 4.
+
+
+Note: The kubectl utility on the jump-host has been configured to work with the Kubernetes cluster.
+
+------------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>-----------------------------------------
+
+1  kubectl get deploy
+    2  kubectl get services
+    3  cat/tmp/httpd.yml
+    4  cat/tmp/httpd.yaml
+    5  vi /tmp/httpd.yaml -   create a YAML manifest file and apply it using kubectl.
+    6  cat/tmp/httpd.yaml
+    7  cat httpd.yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: httpd-replicaset
+  labels:
+    app: httpd_app
+    type: front-end
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: httpd_app
+  template:
+    metadata:
+      labels:
+        app: httpd_app
+        type: front-end
+    spec:
+      containers:
+        - name: httpd-container
+          image: httpd:latest
+
+    8  ls
+    9  ls -la
+   10  vi httpd.yaml
+   11  cat httpd.yaml
+   12  ls -la
+   13  kubectl create -f /httpd.yaml
+   14  kubectl create -f /tmp/httpd.yaml
+   15  kubectl get pod
+   16  kubectl get pods
+   17  kubectl describe httpd-replicaset
+   18  kubectl describe replicaset httpd-replicaset
+   19  history
