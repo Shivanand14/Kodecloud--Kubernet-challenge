@@ -1,0 +1,35 @@
+The Nautilus DevOps team is setting up recurring tasks on different schedules. Currently, they're developing scripts to be executed periodically. To kickstart the process, they're creating cron jobs in the Kubernetes cluster with placeholder commands. Follow the instructions below:
+Create a cronjob named nautilus.
+Set Its schedule to something like */9 * * * *. You can set any schedule for now.
+Name the container cron-nautilus.
+Utilize the nginx image with latest tag (specify as nginx:latest).
+Execute the dummy command echo Welcome to xfusioncorp!.
+Ensure the restart policy is OnFailure.
+Note: The kubectl utility on the jump-host has been configured to work with the Kubernetes cluster.
+
+==================
+
+kubectl get pods
+    2  kubectl get cronjobs
+    3  vi cron.yaml
+    4  cat cron.yaml
+    5  kubectl create -f /tmp/cron.yaml
+    6  ls
+    7  cd tmp
+    8  kubectl create -f /cron.yaml
+    9  kubectl create -f nautilus-cronjob.yaml
+   10  vi nautilus-cronjob.yaml
+   11  kubectl create -f nautilus-cronjob.yaml
+   12  kubectl get cronjobs
+   13  kubectl get jobs --watch
+   14  kubectl get pods
+   15  vi nautilus-cronjob1.yaml
+   16  kubectl create -f nautilus-cronjob1.yaml
+   17  vi nautilus-cronjob1.yaml
+   18  kubectl create -f nautilus-cronjob1.yaml
+   19  vi nautilus-cronjob1.yaml
+   20  kubectl create -f nautilus-cronjob1.yaml
+   21  kubectl get cronjobs
+   22  kubectl get jobs --watch
+   23  kubectl get pods
+   24  kubectl logs nautilus1-29570982-lvz55
