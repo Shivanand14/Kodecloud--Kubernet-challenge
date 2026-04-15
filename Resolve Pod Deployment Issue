@@ -1,0 +1,61 @@
+A junior DevOps team member encountered difficulties deploying a stack on the Kubernetes cluster. The pod fails to start, presenting errors. Let's troubleshoot and rectify the issue promptly.
+
+
+There is a pod named webserver, and the container within it is named nginx-container, its utilizing the nginx:latest image.
+
+Additionally, there's a sidecar container named sidecar-container using the ubuntu:latest image.
+
+Identify and address the issue to ensure the pod is in the running state and the application is accessible.
+
+Note: The kubectl utility on the jump-host has been configured to work with the Kubernetes cluster.
+
+++++++++++++++++++++++++++---------------------------++++++++++++++++++++++++++++++=================================================
+
+1  kubectl get clusters
+    2  kubectl get cluster
+    3  kubectl get pods
+    4  kubectl describe pods webserver
+        9  kubectl edit pod webserver
+   13  kubectl delete pod webserver
+   14  kubectl get pods
+   17  kubectl describe pods webserver
+   18  kubectl get pods
+   29  vi webserver.yaml
+   30  kubectl apply -f webserver.yaml
+   31  kubectl get pods
+   32  kubectl describe pods webserver
+   33  kubectl logs webserver -c nginx-container
+   34  kubectl logs webserver -c sidecar-container
+   35  kubectl exec webserver -c nginx-container -- curl -s localhost:80 | head -n 5
+   36  history
+
+webserver corrected yaml manifest file:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webserver
+  labels:
+    app: web-app
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx:latest # Fixed: removed extra 's' 
+    ports:
+    - containerPort: 80 
+    volumeMounts:
+    - name: shared-logs
+      mountPath: /var/log/nginx
+  - name: sidecar-container
+    image: ubuntu:latest 
+    command:
+      - sh
+      - -c
+    args:
+      - while true; do cat /var/log/nginx/access.log /var/log/nginx/error.log; sleep 30; done 
+    volumeMounts:
+    - name: shared-logs
+      mountPath: /var/log/nginx
+  volumes:
+  - name: shared-logs
+    emptyDir: {}
